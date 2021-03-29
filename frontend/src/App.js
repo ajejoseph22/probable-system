@@ -1,13 +1,16 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { getCurrencies } from "./services/currencies";
 import Spinner from "./components/spinner";
 import ErrorPage from "./components/error-page";
 import { Switch } from "antd";
+import { shuffleArray, sortByAscending } from "./util/methods";
+
 import "./App.css";
 import "react-toggle/style.css";
 
 function App() {
-  const [currencies, setCurrencies] = useState();
+  const [currencies, setCurrencies] = useState([]);
+  const [filteredCurrencies, setFilteredCurrencies] = useState([]);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [
@@ -27,23 +30,29 @@ function App() {
     }
   };
 
-  const filteredCurrencies = useMemo(() => {
-    let currenciesToFilter = currencies || [];
+  useEffect(() => {
+    let currenciesFiltered = currencies || [];
 
     if (isDisplayingUsSupportedOnly) {
-      currenciesToFilter = currenciesToFilter.filter(
+      currenciesFiltered = currenciesFiltered.filter(
         (currency) => currency.isSupportedInUS
       );
     }
 
     if (isTestModeOnly) {
-      currenciesToFilter = currenciesToFilter.filter(
+      currenciesFiltered = currenciesFiltered.filter(
         (currency) => currency.supportsTestMode
       );
     }
 
-    return currenciesToFilter;
+    setFilteredCurrencies(currenciesFiltered);
   }, [currencies, isDisplayingUsSupportedOnly, isTestModeOnly]);
+
+  useEffect(() => {
+    (async () => {
+      await fetchCurrenciesAndSetState();
+    })();
+  }, []);
 
   const handleOnChangeUsSupportedOnly = () => {
     setIsDisplayingUsSupportedOnly((prevState) => !prevState);
@@ -53,11 +62,25 @@ function App() {
     setIsTestModeOnly((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    (async () => {
-      await fetchCurrenciesAndSetState();
-    })();
-  }, []);
+  const sortByNameAscending = () => {
+    setFilteredCurrencies(
+      [...filteredCurrencies].sort((first, second) =>
+        sortByAscending(first.name, second.name)
+      )
+    );
+  };
+
+  const sortBySymbolAscending = () => {
+    setFilteredCurrencies(
+      [...filteredCurrencies].sort((first, second) =>
+        sortByAscending(first.code, second.code)
+      )
+    );
+  };
+
+  const shuffle = () => {
+    setFilteredCurrencies((prevState) => shuffleArray(prevState));
+  };
 
   if (isLoading) return <Spinner color="#000" />;
 
@@ -72,21 +95,38 @@ function App() {
 
   return (
     <div id="app">
-      <Switch
-        checkedChildren="Show only US supported"
-        unCheckedChildren="Include non US supported"
-        onChange={handleOnChangeUsSupportedOnly}
-      />
-      <br />
-      <Switch
-        checkedChildren="Test mode only"
-        unCheckedChildren="Include non test mode"
-        onChange={handleOnChangeTestModeOnly}
-      />
+      <div id="controls">
+        <Switch
+          className="control-item"
+          checkedChildren="Show only US supported"
+          unCheckedChildren="Include non US supported"
+          onChange={handleOnChangeUsSupportedOnly}
+        />
+
+        <Switch
+          className="control-item"
+          checkedChildren="Test mode only"
+          unCheckedChildren="Include non test mode"
+          onChange={handleOnChangeTestModeOnly}
+        />
+
+        <button onClick={sortByNameAscending} className="control-item">
+          Sort by Ascending (name)
+        </button>
+        <button onClick={sortBySymbolAscending} className="control-item">
+          Sort by Ascending (symbol)
+        </button>
+        <button onClick={shuffle} className="control-item">
+          Shuffle
+        </button>
+      </div>
+
       <header>CURRENCIES</header>
       <div id="currencies">
-        {filteredCurrencies.map(({ name }) => (
-          <div className="currency">{name}</div>
+        {filteredCurrencies.map(({ name, id }) => (
+          <div key={id} className="currency">
+            {name}
+          </div>
         ))}
       </div>
     </div>

@@ -3,6 +3,18 @@
   margin: 20px auto;
 }
 
+#controls {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.control-item {
+  margin: 3px;
+  cursor: pointer;
+}
+
 .currency {
   text-align: center;
   font-size: 14px;
