@@ -21,6 +21,7 @@ function App() {
 
   const fetchCurrenciesAndSetState = async () => {
     try {
+      setError(null);
       setIsLoading(true);
       setCurrencies(await getCurrencies());
     } catch ({ message }) {
