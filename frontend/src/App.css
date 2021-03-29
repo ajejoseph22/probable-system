@@ -3,10 +3,6 @@
   margin: 20px auto;
 }
 
-#currencies {
-  column-count: 3;
-}
-
 .currency {
   text-align: center;
   font-size: 14px;
@@ -17,4 +13,23 @@ header {
   font-weight: bold;
   text-align: center;
   margin: 10px 0;
+}
+
+/*PHONES*/
+#currencies {
+  column-count: 1;
+}
+
+/*TABLETS*/
+@media only screen and (min-width: 320px) {
+  #currencies {
+    column-count: 2;
+  }
+}
+
+/*DESKTOP*/
+@media only screen and (min-width: 768px) {
+  #currencies {
+    column-count: 3;
+  }
 }
