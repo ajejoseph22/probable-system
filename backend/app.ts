@@ -3,7 +3,8 @@ import express, { NextFunction, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
-import exchangeRouter from "./routes/exchange";
+import exchangeRoute from "./routes/exchange";
+import indexRoute from "./routes/index";
 import { ExpressError } from "./types/express-error";
 
 const app = express();
@@ -13,7 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use("/exchange", exchangeRouter);
+app.get("/", indexRoute);
+app.use("/exchange", exchangeRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -32,4 +34,4 @@ app.use(function (
   res.status(err.status || 500);
 });
 
-export default app;
+module.exports = app;
