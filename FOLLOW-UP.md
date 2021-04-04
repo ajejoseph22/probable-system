@@ -31,8 +31,21 @@
 
 ### Q) If you had more time, what further improvements or new features would you add?
 
+I would add support for multiple currency pairs, perhaps (not just BTC-USD). I would also migrate the frontend to
+Typescript as well. I would write tests for the backend and frontend code.
+
 ### Q) Which parts are you most proud of? And why?
+
+To be completely honest, I'm not 'most proud' of any part in particular. I'm equally proud of all the parts. I always
+take pride in ALL the code I put out as an engineer. I believe I structured and architected the solutions in ways that
+are easily maintainable and readable, while following best practices in the respective domains. It would be really quick
+and painless for another developer to take over the codebase and become productive with it.
 
 ### Q) Which parts did you spend the most time with? What did you find most difficult?
 
+The backend. Integrating with the third-party APIs (coinbase, bitfinex and binance), understanding how order books work.
+Nothing too difficult but I had to go through a lot of documentation/articles, so I spent longer than I normally would
+
 ### Q) How did you find the test overall? Did you have any issues or have difficulties completing?If you have any suggestions on how we can improve the test, we'd love to hear them.
+
+All good. No issues. No suggestions :)
