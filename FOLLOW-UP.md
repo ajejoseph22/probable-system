@@ -32,7 +32,9 @@
 ### Q) If you had more time, what further improvements or new features would you add?
 
 I would add support for multiple currency pairs, perhaps (not just BTC-USD). I would also migrate the frontend to
-Typescript as well. I would write tests for the backend and frontend code.
+Typescript as well. On the frontend, I would convert the elements representing the coins listed to clickable components,
+so the user can click and trigger a modal to display more information about the coin. I would also write tests for the
+backend and frontend code.
 
 ### Q) Which parts are you most proud of? And why?
 
