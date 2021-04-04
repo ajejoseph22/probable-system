@@ -10,7 +10,7 @@
 
 ### Q) What's the command to start the frontend application locally?
 
-`cd frontend && yarn start`
+`yarn start` - ensure you're in the frontend folder, and you've installed all the dependencies by running `yarn install`
 
 ### Q) What libraries did you add to the backend? What are they used for?
 
@@ -23,7 +23,7 @@
 
 ### Q) What's the command to start the backend application locally?
 
-`cd backend && yarn run dev`
+`yarn run dev`. ensure you're in the backend folder, and you've installed all the dependencies by running `yarn install`
 
 ---
 
