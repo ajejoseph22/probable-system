@@ -1,6 +1,5 @@
 import createError from "http-errors";
 import express, { NextFunction, Response } from "express";
-import cookieParser from "cookie-parser";
 import logger from "morgan";
 
 import exchangeRoute from "./routes/exchange";
@@ -12,7 +11,6 @@ const app = express();
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.get("/", indexRoute);
 app.use("/exchange", exchangeRoute);
