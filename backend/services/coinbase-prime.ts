@@ -5,7 +5,7 @@ import { Symbol } from "../enum/symbol";
 import { CoinBaseOrders } from "../types/order";
 
 class CoinbasePrime implements CryptoExchange {
-  readonly name = "Coinbase Prime";
+  readonly name = "Coinbase";
 
   async getOrderBooks(symbol: Symbol): Promise<CoinBaseOrders> {
     return (

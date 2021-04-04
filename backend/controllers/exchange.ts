@@ -3,7 +3,6 @@ import { Symbol } from "../enum/symbol";
 import Binance from "../services/binance";
 import CoinbasePrime from "../services/coinbase-prime";
 import Bitfinex from "../services/bitfinex";
-import { Exchange } from "../enum/exchange";
 import { SuccessResponse } from "../types/success-response";
 
 const binance = new Binance();
@@ -66,13 +65,13 @@ export default async (req: Request, res: Response) => {
     let exchange;
     switch (bestPrice) {
       case binanceBestBuyPrice:
-        exchange = Exchange.Binance;
+        exchange = binance.name;
         break;
       case coinBaseBestBuyPrice:
-        exchange = Exchange.Coinbase;
+        exchange = coinbase.name;
         break;
       case bitfinexBestBuyPrice:
-        exchange = Exchange.Bitfinex;
+        exchange = bitfinex.name;
         break;
       default:
         throw new Error("Price does not match any exchange");
