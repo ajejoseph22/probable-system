@@ -9,7 +9,9 @@
     "inlineSources": true,
     "sourceMap": true,
     "outDir": "dist",
-    "types": ["node"]
+    "types": ["node"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["./"],
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]

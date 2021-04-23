@@ -1,4 +1,12 @@
 #!/usr/bin/env node
+import 'reflect-metadata';
+import Container from "typedi";
+
+import Binance from '../services/binance';
+import Bitfinex from '../services/bitfinex';
+import CoinbasePrime from '../services/coinbase-prime';
+
+Container.import([Binance, Bitfinex, CoinbasePrime]);
 
 /**
  * Module dependencies.

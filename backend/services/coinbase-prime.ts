@@ -1,23 +1,24 @@
-import CryptoExchange from "../types/crypto-exchange";
 import axios from "axios";
-import { coinbaseApiUrl } from "../util/constants";
+import { Service } from "typedi";
+
+import CryptoExchange from "../types/crypto-exchange";
+import { coinbaseApiUrl, exchangeToken } from "../util/constants";
 import { Symbol } from "../enum/symbol";
 import { CoinBaseOrders } from "../types/order";
 
-class CoinbasePrime implements CryptoExchange {
+@Service({ id: exchangeToken, multiple: true })
+export default class CoinbasePrime extends CryptoExchange {
   readonly name = "Coinbase";
+  private symbol = Symbol.CoinBase_BitcoinUsd;
 
-  async getOrderBooks(symbol: Symbol): Promise<CoinBaseOrders> {
+  async getOrderBooks(): Promise<CoinBaseOrders> {
     return (
-      await axios.get(`${coinbaseApiUrl}/products/${symbol}/book?level=2`)
+      await axios.get(`${coinbaseApiUrl}/products/${this.symbol}/book?level=2`)
     ).data;
   }
 
-  async getBestBuyPrice(
-    amount: number,
-    symbol: Symbol
-  ): Promise<number | undefined> {
-    const orders = await this.getOrderBooks(symbol);
+  async getBestBuyPrice(amount: number): Promise<number | undefined> {
+    const orders = await this.getOrderBooks();
 
     const askOrdersMatchingAmount = orders.asks.filter(
       (item) => +item[1] >= amount
@@ -28,5 +29,3 @@ class CoinbasePrime implements CryptoExchange {
     }
   }
 }
-
-export default CoinbasePrime;

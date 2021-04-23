@@ -1,22 +1,23 @@
-import CryptoExchange from "../types/crypto-exchange";
 import axios from "axios";
-import { binanceApiUrl } from "../util/constants";
+import { Service } from 'typedi';
+
+import CryptoExchange from "../types/crypto-exchange";
+import { binanceApiUrl, exchangeToken } from "../util/constants";
 import { Symbol } from "../enum/symbol";
 import { BinanceOrders } from "../types/order";
 
-class Binance implements CryptoExchange {
+@Service({ id: exchangeToken, multiple: true })
+export default class Binance extends CryptoExchange {
   readonly name = "Binance";
+  private readonly symbol = Symbol.Binance_BitcoinUsd;
 
-  async getOrderBooks(symbol: Symbol): Promise<BinanceOrders> {
-    return (await axios.get(`${binanceApiUrl}/api/v3/depth?symbol=${symbol}`))
+  async getOrderBooks(): Promise<BinanceOrders> {
+    return (await axios.get(`${binanceApiUrl}/api/v3/depth?symbol=${this.symbol}`))
       .data;
   }
 
-  async getBestBuyPrice(
-    amount: number,
-    symbol: Symbol
-  ): Promise<number | undefined> {
-    const orders = await this.getOrderBooks(symbol);
+  async getBestBuyPrice(amount: number): Promise<number | undefined> {
+    const orders = await this.getOrderBooks();
 
     const askOrdersMatchingAmount = orders.asks.filter(
       (item) => +item[1] >= amount
@@ -27,5 +28,3 @@ class Binance implements CryptoExchange {
     }
   }
 }
-
-export default Binance;
